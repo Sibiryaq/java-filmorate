@@ -26,46 +26,28 @@ public class FilmService {
         return new ArrayList<>(films.values());
     }
 
-    public Film create(@Valid Film film) {
-        try {
-            if (films.containsKey(film.getId())) {
-                throw new EntityNotFoundException(
-                        String.format(FILM_ALREADY_EXISTS, film));
-            }
-
-            film.setId(++uniqueID);
-            films.put(film.getId(), film);
-            log.info("Успешно добавлен фильм: {}.", film);
-        } catch (ValidatorException e) {
-            log.warn("Фильм не добавлен: {}.", e.getMessage());
-            throw new ValidatorException("Ошибка валидации: " + e.getMessage());
-        } catch (EntityNotFoundException e) {
-            log.warn("Фильм не добавлен: {}.", e.getMessage());
-            throw new RuntimeException("Ошибка контроллера:" + e.getMessage(), e);
-        } finally {
-            log.debug("Количество фильмов: {}.", films.size());
+    public Film create(Film film) {
+        if (films.containsKey(film.getId())) {
+            throw new EntityNotFoundException(
+                    String.format(FILM_ALREADY_EXISTS, film));
         }
+
+        film.setId(++uniqueID);
+        films.put(film.getId(), film);
+        log.info("Успешно добавлен фильм: {}.", film);
+
         return film;
     }
 
-    public Film update(@Valid Film film) {
-        try {
-            if (!films.containsKey(film.getId())) {
-                throw new EntityNotFoundException(String.format(FILM_NOT_FOUND, film));
-            }
-
-            films.put(film.getId(), film);
-            log.info("Фильм успешно обновлён: {}.", film);
-        } catch (ValidatorException e) {
-            log.warn("Не удалось обновить фильм: {}.", e.getMessage());
-            throw new ValidatorException("Ошибка валидации: " + e.getMessage());
-        } catch (EntityNotFoundException e) {
-            log.warn("Не удалось обновить фильм: {}.", e.getMessage());
-            throw new RuntimeException("Ошибка контроллера:" + e.getMessage(), e);
-        } finally {
-            log.debug("Количество фильмов: {}.", films.size());
+    public Film update(Film film) {
+        if (!films.containsKey(film.getId())) {
+            throw new EntityNotFoundException(String.format(FILM_NOT_FOUND, film));
         }
+
+        films.put(film.getId(), film);
+        log.info("Фильм успешно обновлён: {}.", film);
 
         return film;
     }
+
 }

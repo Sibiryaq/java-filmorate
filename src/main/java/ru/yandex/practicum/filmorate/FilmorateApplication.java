@@ -10,10 +10,4 @@ public class FilmorateApplication {
 		SpringApplication.run(FilmorateApplication.class, args);
 	}
 
-	/*
-	Запускаю здесь, иду в Postman и запускаем
-	spring09/controllers-films-users, должны все тесты пройти, потом пушим в ветку
-	потом если все ок либо я либо Вячеслав сделает merge
-	 */
-
 }

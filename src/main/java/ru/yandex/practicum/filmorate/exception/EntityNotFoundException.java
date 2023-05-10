@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.exceptions;
+package ru.yandex.practicum.filmorate.exception;
 
 public class EntityNotFoundException extends RuntimeException {
     public static final String FILM_ALREADY_EXISTS = "Фильм уже добавлен ранее >%s";

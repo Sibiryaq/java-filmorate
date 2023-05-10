@@ -2,18 +2,16 @@ package ru.yandex.practicum.filmorate.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.filmorate.exceptions.EntityNotFoundException;
-import ru.yandex.practicum.filmorate.exceptions.ValidatorException;
+import ru.yandex.practicum.filmorate.exception.EntityNotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static ru.yandex.practicum.filmorate.exceptions.EntityNotFoundException.FILM_ALREADY_EXISTS;
-import static ru.yandex.practicum.filmorate.exceptions.EntityNotFoundException.FILM_NOT_FOUND;
+import static ru.yandex.practicum.filmorate.exception.EntityNotFoundException.FILM_ALREADY_EXISTS;
+import static ru.yandex.practicum.filmorate.exception.EntityNotFoundException.FILM_NOT_FOUND;
 
 @Service
 @Slf4j

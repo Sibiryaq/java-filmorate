@@ -1,54 +1,75 @@
 package ru.yandex.practicum.filmorate.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.filmorate.exception.EntityNotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.storage.UserStorage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static ru.yandex.practicum.filmorate.exception.EntityNotFoundException.USER_ALREADY_EXISTS;
-import static ru.yandex.practicum.filmorate.exception.EntityNotFoundException.USER_NOT_FOUND;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class UserService {
-    private final Map<Long, User> users = new HashMap<>();
-    private long uniqueID = 0;
+    private final UserStorage userStorage;
 
-    public List<User> getAllUsers() {
-        return new ArrayList<>(users.values());
+
+    @Autowired
+    public UserService(UserStorage userStorage) {
+        this.userStorage = userStorage;
     }
 
     public User createUser(User user) {
-        if (users.containsKey(user.getId())) {
-            throw new EntityNotFoundException(String.format(USER_ALREADY_EXISTS, user));
-        }
-        if (user.getName() == null || user.getName().isBlank()) {
-            user.setName(user.getLogin());
-        }
-
-        user.setId(++uniqueID);
-        users.put(user.getId(), user);
-        log.info("Успешно добавлен пользователь: {}.", user);
-
-        return user;
+        return userStorage.createUser(user);
     }
 
     public User updateUser(User user) {
-        if (!users.containsKey(user.getId())) {
-            throw new EntityNotFoundException(
-                    String.format(USER_NOT_FOUND, user));
-        }
-
-        users.put(user.getId(), user);
-        log.trace("Пользователь успешно обновлён: {}.", user);
-
-        return user;
+        return userStorage.updateUser(user);
     }
 
+    public List<User> getAllUsers() {
+        return userStorage.getAllUsers();
+    }
+
+    public User getUserById(Long id) {
+        return userStorage.getUserById(id);
+    }
+
+ 
+    public void addFriend(Long userId, Long friendId) {
+        User user = userStorage.getUserById(userId);
+        User friend = userStorage.getUserById(friendId);
+        user.getFriends().add(friendId);
+        friend.getFriends().add(userId);
+    }
+    
+    public void deleteFriend(Long userId, Long friendId) {
+        User user = userStorage.getUserById(userId);
+        User friend = userStorage.getUserById(friendId);
+        user.getFriends().remove(friendId);
+        friend.getFriends().remove(userId);
+    }
+
+   
+    public List<User> getFriends(Long userId) {
+        Set<Long> friendIds = userStorage.getUserById(userId).getFriends();
+        return friendIds.stream().map(userStorage::getUserById).collect(Collectors.toList());
+    }
+
+   
+    public List<User> getCommonFriends(Long firstUserId, Long secondUserId) {
+        User firstUser = userStorage.getUserById(firstUserId);
+        User secondUser = userStorage.getUserById(secondUserId);
+        if (firstUser == null || secondUser == null) {
+            return new ArrayList<>();
+        }
+        Set<Long> junction = new HashSet<>(firstUser.getFriends());
+        junction.retainAll(secondUser.getFriends());
+        return junction.stream()
+                .map(userStorage::getUserById)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
 
 }

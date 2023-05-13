@@ -26,7 +26,7 @@ public class UserControllerTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
         user = new User(1L, "4totakoeaaa@mail.ru", "sibiryaq", "Саша",
-                LocalDate.of(1994, 6, 25) );
+                LocalDate.of(1994, 6, 25));
         violations = validator.validate(user);
     }
 

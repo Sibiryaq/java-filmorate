@@ -13,7 +13,6 @@ import ru.yandex.practicum.filmorate.storage.UserStorage;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Service
 public class FilmService {
     private final FilmStorage filmStorage;
@@ -53,7 +52,6 @@ public class FilmService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь c id=" + userId + " не найден!");
         }
     }
-
 
     public void deleteLike(Long filmId, Long userId) {
         Film film = filmStorage.getFilmById(filmId);

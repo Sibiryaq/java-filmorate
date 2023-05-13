@@ -13,8 +13,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class UserService {
     private final UserStorage userStorage;
-
-
+    
     @Autowired
     public UserService(UserStorage userStorage) {
         this.userStorage = userStorage;
@@ -35,7 +34,7 @@ public class UserService {
     public User getUserById(Long id) {
         return userStorage.getUserById(id);
     }
-    
+
     public void addFriend(Long userId, Long friendId) {
         User user = userStorage.getUserById(userId);
         User friend = userStorage.getUserById(friendId);
@@ -50,12 +49,10 @@ public class UserService {
         friend.getFriends().remove(userId);
     }
 
-
     public List<User> getFriends(Long userId) {
         Set<Long> friendIds = userStorage.getUserById(userId).getFriends();
         return friendIds.stream().map(userStorage::getUserById).collect(Collectors.toList());
     }
-
 
     public List<User> getCommonFriends(Long firstUserId, Long secondUserId) {
         User firstUser = userStorage.getUserById(firstUserId);

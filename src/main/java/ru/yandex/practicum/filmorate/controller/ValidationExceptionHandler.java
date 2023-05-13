@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 
-
 /*
  Настройте ExceptionHandler для централизованной обработки ошибок.
  */

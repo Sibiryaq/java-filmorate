@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import ru.yandex.practicum.filmorate.exception.EntityNotFoundException;
-import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.util.ArrayList;
@@ -58,9 +57,6 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     @Override
     public Film delete(Long filmId) {
-        if (filmId == null) {
-            throw new ValidationException("Передан пустой ID!");
-        }
         if (!films.containsKey(filmId)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Фильм с id=" + filmId + " не найден!");
         }

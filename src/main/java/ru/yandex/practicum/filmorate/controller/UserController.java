@@ -7,6 +7,7 @@ import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Slf4j
@@ -63,6 +64,12 @@ public class UserController {
     public void deleteFriend(@PathVariable Long id, @PathVariable Long friendId) {
         log.info("Получен запрос DELETE /{id}/friends/{friendId} на удаление из друзей пользователя с id={}", friendId);
         userService.deleteFriend(id, friendId);
+    }
+
+    @DeleteMapping("/{id}")
+    public User delete(@PathVariable @NotNull Long id) {
+        log.info("Получен запрос DELETE /{id} на удаление фильма с id={}", id);
+        return userService.delete(id);
     }
 
 }

@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import ru.yandex.practicum.filmorate.exception.EntityNotFoundException;
-import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.ArrayList;
@@ -57,9 +56,6 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public User delete(Long userId) {
-        if (userId == null) {
-            throw new ValidationException("Передан пустой ID!");
-        }
         if (!users.containsKey(userId)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь с ID=" + userId + " не найден!");
         }

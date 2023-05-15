@@ -33,6 +33,10 @@ public class UserService {
         return userStorage.getUserById(id);
     }
 
+    public User delete(Long id) {
+        return userStorage.delete(id);
+    }
+
     public void addFriend(Long userId, Long friendId) {
         User user = userStorage.getUserById(userId);
         User friend = userStorage.getUserById(friendId);
@@ -55,12 +59,10 @@ public class UserService {
     public List<User> getCommonFriends(Long firstUserId, Long secondUserId) {
         User firstUser = userStorage.getUserById(firstUserId);
         User secondUser = userStorage.getUserById(secondUserId);
-        if (firstUser == null || secondUser == null) {
-            return new ArrayList<>();
-        }
-        Set<Long> junction = new HashSet<>(firstUser.getFriends());
-        junction.retainAll(secondUser.getFriends());
-        return junction.stream()
+
+        Set<Long> firstUserFriends = new HashSet<>(firstUser.getFriends());
+        firstUserFriends.retainAll(secondUser.getFriends());
+        return firstUserFriends.stream()
                 .map(userStorage::getUserById)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());

@@ -5,17 +5,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ru.yandex.practicum.filmorate.exception.ValidationException;
+import ru.yandex.practicum.filmorate.exception.EntityNotFoundException;
 
-/*
- Настройте ExceptionHandler для централизованной обработки ошибок.
- */
 @ControllerAdvice
 public class ValidationExceptionHandler {
 
-    @ExceptionHandler(ValidationException.class)
+    @ExceptionHandler(EntityNotFoundException.class)
     @ResponseBody
-    public ResponseEntity<String> handleValidationException(ValidationException e) {
+    public ResponseEntity<String> handleValidationException(EntityNotFoundException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 }

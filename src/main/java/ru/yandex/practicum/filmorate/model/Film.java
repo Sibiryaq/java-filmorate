@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-//Setter,Getter,ToString,EqualsAndHashCode,RequiredArgsConstructor(final-поля или NonNull)
 @Data
 public class Film {
     private Long id;

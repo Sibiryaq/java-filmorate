@@ -4,15 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
-import ru.yandex.practicum.filmorate.exception.EntityNotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static ru.yandex.practicum.filmorate.exception.EntityNotFoundException.FILM_ALREADY_EXISTS;
 
 @Component
 @Slf4j
@@ -28,8 +25,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     @Override
     public Film create(Film film) {
         if (films.containsKey(film.getId())) {
-            throw new EntityNotFoundException(
-                    String.format(FILM_ALREADY_EXISTS, film));
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Фильм c id=" + film.getId() + " добавлен ранее");
         }
         film.setId(++filmID);
         films.put(film.getId(), film);

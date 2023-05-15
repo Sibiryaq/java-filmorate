@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.FilmStorage;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
@@ -42,11 +43,8 @@ public class FilmService {
 
     public void addLike(Long filmId, Long userId) {
         Film film = filmStorage.getFilmById(filmId);
-        if (userStorage.getUserById(userId) != null) {
-            film.getLikes().add(userId);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь c id=" + userId + " не найден!");
-        }
+        User user = userStorage.getUserById(userId);
+        film.getLikes().add(user.getId());
     }
 
     public void deleteLike(Long filmId, Long userId) {

@@ -1,15 +1,15 @@
 package ru.yandex.practicum.filmorate.model;
 
-import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
-@Builder
 public class User {
-    private long id; // целочисленный идентификатор
+    private Long id; // целочисленный идентификатор
 
     @NotNull
     @NotBlank
@@ -26,4 +26,15 @@ public class User {
     @NotNull
     @Past
     private LocalDate birthday; // дата рождения
+
+    private Set<Long> friends = new HashSet<>();
+
+    public User(Long id, String email, String login, String name, LocalDate birthday) {
+        this.id = id;
+        this.email = email;
+        this.login = login;
+        this.name = (name == null || name.isEmpty() || name.isBlank()) ? login : name;
+        this.birthday = birthday;
+    }
+
 }

@@ -9,32 +9,21 @@ import java.util.Set;
 
 @Data
 public class User {
-    private Long id; // целочисленный идентификатор
+    private Long id;
 
-    @NotNull
-    @NotBlank
-    @Email
-    private String email; // почта
+    @NotBlank(message = "Пустая электронная почта")
+    @Email(message = "Некорректная почта")
+    private String email;
 
-    @NotNull
-    @NotBlank
-    @Pattern(regexp = "\\S+")
-    private String login;  // логин пользователя
+    @NotBlank(message = "Логин не может быть пустым")
+    @Pattern(regexp = "\\S+", message = "В логине не могут находиться пробелы")
+    private String login;
 
-    private String name;  // имя
+    private String name;
 
-    @NotNull
-    @Past
-    private LocalDate birthday; // дата рождения
+    @NotNull(message = "Пустая дата рождения")
+    @Past(message = "Дата рождения не может быть в будущем")
+    private LocalDate birthday;
 
     private Set<Long> friends = new HashSet<>();
-
-    public User(Long id, String email, String login, String name, LocalDate birthday) {
-        this.id = id;
-        this.email = email;
-        this.login = login;
-        this.name = (name == null || name.isEmpty() || name.isBlank()) ? login : name;
-        this.birthday = birthday;
-    }
-
 }

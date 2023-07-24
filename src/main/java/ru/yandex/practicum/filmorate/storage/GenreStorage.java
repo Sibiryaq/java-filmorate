@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GenreStorage {
     private final JdbcTemplate jdbcTemplate;
-    
+
     public List<Genre> getAllGenres() {
         String sql = "SELECT * FROM genres ORDER BY id";
         GenreMapper genreMapper = new GenreMapper();
@@ -36,7 +36,6 @@ public class GenreStorage {
         }
         return genre;
     }
-
 
     public void delete(Film film) {
         jdbcTemplate.update("DELETE FROM film_genres WHERE film_id = ?", film.getId());
@@ -65,10 +64,8 @@ public class GenreStorage {
 
         String insertGenresQuery = "INSERT INTO FILM_GENRES (FILM_ID, GENRE_ID) VALUES (?, ?)";
 
-        // Выполнить вставку всех жанров без сортировки
         for (Genre genre : film.getGenres()) {
             jdbcTemplate.update(insertGenresQuery, film.getId(), genre.getId());
         }
     }
-
 }

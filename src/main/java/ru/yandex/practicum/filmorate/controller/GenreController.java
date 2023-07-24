@@ -20,9 +20,9 @@ public class GenreController {
     private final GenreService genreService;
 
     @GetMapping
-    public Collection<Genre> getGenres() {
+    public Collection<Genre> getAllGenres() {
         log.info("Получен запрос GET /genres на получение всех жанров");
-        return genreService.getGenres();
+        return genreService.getAllGenres();
     }
 
     @GetMapping("/{id}")

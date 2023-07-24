@@ -1,7 +1,6 @@
 package ru.yandex.practicum.filmorate.storage;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -12,16 +11,16 @@ import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Genre;
 
 import java.util.List;
+import java.util.Set;
 
-@Primary
 @Component
 @RequiredArgsConstructor
 public class GenreStorage {
     private final JdbcTemplate jdbcTemplate;
-    GenreMapper genreMapper = new GenreMapper();
 
-    public List<Genre> getGenres() {
+    public List<Genre> getAllGenres() {
         String sql = "SELECT * FROM genres ORDER BY id";
+        GenreMapper genreMapper = new GenreMapper();
         return jdbcTemplate.query(sql, genreMapper);
     }
 
@@ -61,15 +60,15 @@ public class GenreStorage {
         );
     }
 
-    public void updateGenres(Film film) {
+    public void updateGenres(Set<Genre> genres, Long filmId) {
         String deleteGenresQuery = "DELETE FROM FILM_GENRES WHERE FILM_ID = ?";
-        jdbcTemplate.update(deleteGenresQuery, film.getId());
+        jdbcTemplate.update(deleteGenresQuery, filmId);
 
         String insertGenresQuery = "INSERT INTO FILM_GENRES (FILM_ID, GENRE_ID) VALUES (?, ?)";
 
         // Выполнить вставку всех жанров без сортировки
-        for (Genre genre : film.getGenres()) {
-            jdbcTemplate.update(insertGenresQuery, film.getId(), genre.getId());
+        for (Genre genre : genres) {
+            jdbcTemplate.update(insertGenresQuery, filmId, genre.getId());
         }
     }
 

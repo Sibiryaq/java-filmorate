@@ -11,13 +11,12 @@ import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Genre;
 
 import java.util.List;
-import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
 public class GenreStorage {
     private final JdbcTemplate jdbcTemplate;
-
+    
     public List<Genre> getAllGenres() {
         String sql = "SELECT * FROM genres ORDER BY id";
         GenreMapper genreMapper = new GenreMapper();
@@ -60,15 +59,15 @@ public class GenreStorage {
         );
     }
 
-    public void updateGenres(Set<Genre> genres, Long filmId) {
+    public void updateGenres(Film film) {
         String deleteGenresQuery = "DELETE FROM FILM_GENRES WHERE FILM_ID = ?";
-        jdbcTemplate.update(deleteGenresQuery, filmId);
+        jdbcTemplate.update(deleteGenresQuery, film.getId());
 
         String insertGenresQuery = "INSERT INTO FILM_GENRES (FILM_ID, GENRE_ID) VALUES (?, ?)";
 
         // Выполнить вставку всех жанров без сортировки
-        for (Genre genre : genres) {
-            jdbcTemplate.update(insertGenresQuery, filmId, genre.getId());
+        for (Genre genre : film.getGenres()) {
+            jdbcTemplate.update(insertGenresQuery, film.getId(), genre.getId());
         }
     }
 

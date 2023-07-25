@@ -67,7 +67,7 @@ public class FilmDbStorage implements FilmStorage {
 
         if (updateCount != 0) {
             film.setMpa(mpaStorage.getMpaById(film.getMpa().getId()));
-            genreStorage.updateGenres(film.getGenres(), film.getId()); //Напрямую, мимо сервисов
+            genreStorage.updateGenres(film); //Напрямую, мимо сервисов
 
             return film;
         } else {

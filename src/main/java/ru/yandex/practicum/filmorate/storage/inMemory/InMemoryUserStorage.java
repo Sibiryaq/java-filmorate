@@ -1,10 +1,11 @@
-package ru.yandex.practicum.filmorate.storage;
+package ru.yandex.practicum.filmorate.storage.inMemory;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.storage.interfaces.UserStorage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,10 +17,6 @@ import java.util.Map;
 public class InMemoryUserStorage implements UserStorage {
     private final Map<Long, User> users = new HashMap<>();
     private Long userID = 0L;
-
-    public List<User> getAllUsers() {
-        return new ArrayList<>(users.values());
-    }
 
     public User createUser(User user) {
         if (users.containsKey(user.getId())) {
@@ -41,6 +38,10 @@ public class InMemoryUserStorage implements UserStorage {
         users.put(user.getId(), user);
         log.trace("Пользователь успешно обновлён: {}.", user);
         return user;
+    }
+
+    public List<User> getAllUsers() {
+        return new ArrayList<>(users.values());
     }
 
     @Override

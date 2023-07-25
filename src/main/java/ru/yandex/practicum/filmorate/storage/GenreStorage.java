@@ -11,6 +11,7 @@ import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Genre;
 
 import java.util.List;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -59,7 +60,7 @@ public class GenreStorage {
         );
     }
 
-    public void updateGenres(List<Genre> genres, Long filmId) {
+    public void updateGenres(Long filmId, Set<Genre> genres) {
         String deleteGenresQuery = "DELETE FROM FILM_GENRES WHERE FILM_ID = ?";
         jdbcTemplate.update(deleteGenresQuery, filmId);
 

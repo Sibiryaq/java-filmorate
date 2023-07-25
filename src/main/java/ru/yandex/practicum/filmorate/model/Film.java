@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.model;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.Data;
 import ru.yandex.practicum.filmorate.validator.AfterDate;
 
@@ -8,39 +9,42 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 public class Film {
     private Long id;
 
-    @NotNull
-    @NotBlank
+    @NotNull(message = "У фильма должно быть имя")
+    @NotBlank(message = "Имя не может быть пустым")
     private String name;
 
-    @NotNull
-    @Size(max = 200)
+    @NotNull(message = "У фильма должно быть описание")
+    @Size(max = 200, message = "Описание не более 200 символов")
     private String description;
 
-    @NotNull
-    @AfterDate(value = "1895-12-28")
-    private LocalDate releaseDate;
-
-    @NotNull
-    @Positive
+    @NotNull(message = "У фильма должна быть указана продолжительность")
+    @Positive(message = "Продолжительность фильма не может быть отрицательной")
     private int duration;
 
-    private Set<Long> likes; // Сет, чтобы НЕ добавить одного и того же дважды. Один пользователь - один лайк
+    @NotNull(message = "У фильма должна быть указана дата релиза")
+    @AfterDate(value = "1895-12-28", message = "Дата выхода должна быть после указанной даты")
+    private LocalDate releaseDate;
 
-    public Film(Long id, String name, String description, Integer duration, LocalDate releaseDate) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.duration = duration;
-        this.releaseDate = releaseDate;
-        this.likes = new HashSet<>();
+    @NotNull(message = "У фильма должен быть указан рейтинг MPA и жанр ")
+    private Mpa mpa;
+    private Set<Genre> genres = new HashSet<>();
+
+    private Set<Long> likes;
+
+    @JsonSetter
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres.stream()
+                .sorted(Comparator.comparingInt(Genre::getId))
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
-
-
 }

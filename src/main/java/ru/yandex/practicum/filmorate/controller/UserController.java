@@ -18,8 +18,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public List<User> findAll() {
-        log.info("Возвращены все пользователи");
+    public List<User> getAllUsers() {
+        log.info("Получен список всех пользователей");
         return userService.getAllUsers();
     }
 
@@ -31,12 +31,12 @@ public class UserController {
 
     @PutMapping
     public User update(@Valid @RequestBody User user) {
-        log.info("Получен запрос PUT /users' на обновление пользователя с id={}", user.getId());
+        log.info("Получен запрос PUT /users на обновление пользователя с id={}", user.getId());
         return userService.updateUser(user);
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) { // GET .../users/{id}
+    public User getUserById(@PathVariable Long id) {
         log.info("Получен запрос GET /{id} на получение пользователя с id={}", id);
         return userService.getUserById(id);
     }

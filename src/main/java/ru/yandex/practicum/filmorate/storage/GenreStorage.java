@@ -16,10 +16,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GenreStorage {
     private final JdbcTemplate jdbcTemplate;
-    GenreMapper genreMapper = new GenreMapper();
+
 
     public List<Genre> getGenres() {
         String sql = "SELECT * FROM genres ORDER BY id";
+        GenreMapper genreMapper = new GenreMapper();
         return jdbcTemplate.query(sql, genreMapper);
     }
 

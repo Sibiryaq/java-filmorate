@@ -51,7 +51,7 @@ public class FriendStorage {
     }
 
     public List<User> getCommonFriends(Long firstUserId, Long secondUserId) {
-        String sql = "SELECT *" +
+        String sql = "SELECT * " +
                 "FROM friends f1 " +
                 "JOIN friends f2 ON f1.friend_id = f2.friend_id " +
                 "JOIN users u ON f1.friend_id = u.id " +

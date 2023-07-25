@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS films
     duration     int          NOT NULL,
     rating_id    int          NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT fk_rating_id FOREIGN KEY (rating_id) REFERENCES ratings_mpa (id) ON DELETE RESTRICT
+    CONSTRAINT fk_rating_id FOREIGN KEY (rating_id) REFERENCES ratings_mpa (id)
     );
 
 CREATE TABLE IF NOT EXISTS genres

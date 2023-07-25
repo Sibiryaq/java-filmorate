@@ -17,7 +17,6 @@ import java.util.List;
 public class GenreStorage {
     private final JdbcTemplate jdbcTemplate;
 
-
     public List<Genre> getGenres() {
         String sql = "SELECT * FROM genres ORDER BY id";
         GenreMapper genreMapper = new GenreMapper();
@@ -60,15 +59,14 @@ public class GenreStorage {
         );
     }
 
-    public void updateGenres(Film film) {
+    public void updateGenres(List<Genre> genres, Long filmId) {
         String deleteGenresQuery = "DELETE FROM FILM_GENRES WHERE FILM_ID = ?";
-        jdbcTemplate.update(deleteGenresQuery, film.getId());
+        jdbcTemplate.update(deleteGenresQuery, filmId);
 
         String insertGenresQuery = "INSERT INTO FILM_GENRES (FILM_ID, GENRE_ID) VALUES (?, ?)";
 
-        // Выполнить вставку всех жанров без сортировки
-        for (Genre genre : film.getGenres()) {
-            jdbcTemplate.update(insertGenresQuery, film.getId(), genre.getId());
+        for (Genre genre : genres) {
+            jdbcTemplate.update(insertGenresQuery, filmId, genre.getId());
         }
     }
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import ru.yandex.practicum.filmorate.mapper.FilmMapper;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.storage.interfaces.FilmStorage;
 import ru.yandex.practicum.filmorate.storage.model.FilmColumn;
 
@@ -67,7 +68,7 @@ public class FilmDbStorage implements FilmStorage {
 
         if (updateCount != 0) {
             film.setMpa(mpaStorage.getMpaById(film.getMpa().getId()));
-            genreStorage.updateGenres(film); //Напрямую, мимо сервисов
+            genreStorage.updateGenres((List<Genre>) film.getGenres(), film.getId()); //Напрямую, мимо сервисов
 
             return film;
         } else {

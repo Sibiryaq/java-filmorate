@@ -1,7 +1,6 @@
 package ru.yandex.practicum.filmorate.storage;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -13,7 +12,6 @@ import ru.yandex.practicum.filmorate.model.Genre;
 
 import java.util.List;
 
-@Primary
 @Component
 @RequiredArgsConstructor
 public class GenreStorage {

@@ -12,7 +12,7 @@ _________
 <details>
   <summary>Добавить фильм</summary>
   
-  ```
+  ``` 
   INSERT INTO film (film_id, title, description, duration, release_date) VALUES (ID, 'TITLE', 'DESCRIPTION', DURATION , 'RELEASE (YYYY-MM-DD)';
   ```
 
@@ -22,7 +22,7 @@ _________
   <summary>Добавить жанр и рейтинг MPA</summary>
 
   ```
-  INSERT INTO film_genre (film_id, genre_id, mpa_rating_id) VALUES (FILM_ID, GENRE_ID, MPA_RATING_ID);;
+  INSERT INTO film_genre (film_id, genre_id, mpa_rating_id) VALUES (FILM_ID, GENRE_ID, MPA_RATING_ID);
   ```
 </details>    
 
@@ -51,5 +51,6 @@ _________
   - **«Популярные фильмы»**, которая предусматривает вывод самых любимых у зрителей фильмов по жанрам и годам. 
 
 Ссылка на групповой проект: https://github.com/AndreyAFedotov/java-filmorate
+
 
 
